@@ -1,10 +1,10 @@
 # Getting Started with Note Taking API
 
-This guide will help you run and test the Note Taking API in less than 15 minutes.
+This guide will help you run and test the Note Taking API
 
 ---
 
-## 📋 Prerequisites
+## Prerequisites
 
 Before starting, ensure you have:
 

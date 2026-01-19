@@ -2,7 +2,7 @@
 
 A robust RESTful API for note-taking with advanced features including versioning, concurrency control, full-text search, and Redis caching.
 
-## 🚀 Features
+##  Features
 
 - **User Authentication**: Secure registration and login with JWT tokens
 - **Note Management**: Create, read, update, delete notes
@@ -13,14 +13,14 @@ A robust RESTful API for note-taking with advanced features including versioning
 - **Soft Deletion**: Notes are soft-deleted, preserving history
 - **Design Patterns**: Singleton pattern for database and Redis connections
 
-## 📋 Prerequisites
+##  Prerequisites
 
 - **Node.js**: v16 or higher
 - **MySQL**: v8.0 or higher
 - **Redis**: v6.0 or higher
 - **npm**: v7 or higher
 
-## 🛠️ Installation
+## Installation
 
 ### 1. Clone the repository
 
@@ -124,7 +124,7 @@ npm start
 
 The API will be available at `http://localhost:3000`
 
-## 📚 API Documentation
+## API Documentation
 
 ### Base URL
 
