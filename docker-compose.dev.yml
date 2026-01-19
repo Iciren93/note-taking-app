@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: note-taking-mysql-dev
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: note_taking_db
+      MYSQL_USER: noteuser
+      MYSQL_PASSWORD: notepassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_dev_data:/var/lib/mysql
+    networks:
+      - note-taking-dev-network
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    container_name: note-taking-redis-dev
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_dev_data:/data
+    networks:
+      - note-taking-dev-network
+
+  # Node.js Application (Development mode with hot reload)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: note-taking-app-dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      NODE_ENV: development
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: note_taking_db
+      DB_USER: noteuser
+      DB_PASSWORD: notepassword
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ""
+      JWT_SECRET: dev_jwt_secret_key
+      JWT_EXPIRES_IN: 24h
+      CACHE_TTL: 3600
+    volumes:
+      - ./src:/app/src
+      - ./package.json:/app/package.json
+      - node_modules:/app/node_modules
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - note-taking-dev-network
+
+volumes:
+  mysql_dev_data:
+  redis_dev_data:
+  node_modules:
+
+networks:
+  note-taking-dev-network:
+    driver: bridge
+
